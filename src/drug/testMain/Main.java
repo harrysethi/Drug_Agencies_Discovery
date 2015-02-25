@@ -46,6 +46,7 @@ public class Main {
 							int second_l = get_l(k, i2, j2);
 							int third_l;
 
+							// 4. constraint
 							if (i1 == j2) {
 								third_l = get_l(k, i2, j1);
 								triangle_constraints(buff, first_l, second_l,
@@ -59,34 +60,9 @@ public class Main {
 							}
 
 							else {
-								// checking the graph as connected
-								if (Globals.graph[i1][j2] == 1) {
-									third_l = get_l(k, i1, j2);
-									three_edges_constraint(buff, third_l,
-											first_l, second_l, true, true,
-											false);
-								}
-
-								if (Globals.graph[j1][i2] == 1) {
-									third_l = get_l(k, j1, i2);
-									three_edges_constraint(buff, third_l,
-											first_l, second_l, true, true,
-											false);
-								}
-
-								if (Globals.graph[j1][j2] == 1) {
-									third_l = get_l(k, j1, j2);
-									three_edges_constraint(buff, third_l,
-											first_l, second_l, true, true,
-											false);
-								}
-
-								if (Globals.graph[i1][i2] == 1) {
-									third_l = get_l(k, i1, i2);
-									three_edges_constraint(buff, third_l,
-											first_l, second_l, true, true,
-											false);
-								}
+								// 5. constraint
+								constraint_checkingGraphConnected(buff, k, i1,
+										j1, i2, j2, first_l, second_l);
 
 							}
 
@@ -102,6 +78,35 @@ public class Main {
 		StringBuffer p_buff = setP_Buff();
 
 		printSATinput(buff, p_buff);
+	}
+
+	private static void constraint_checkingGraphConnected(StringBuffer buff,
+			int k, int i1, int j1, int i2, int j2, int first_l, int second_l) {
+		int third_l;
+		// checking the graph as connected
+		if (Globals.graph[i1][j2] == 1) {
+			third_l = get_l(k, i1, j2);
+			three_edges_constraint(buff, third_l, first_l, second_l, true,
+					true, false);
+		}
+
+		if (Globals.graph[j1][i2] == 1) {
+			third_l = get_l(k, j1, i2);
+			three_edges_constraint(buff, third_l, first_l, second_l, true,
+					true, false);
+		}
+
+		if (Globals.graph[j1][j2] == 1) {
+			third_l = get_l(k, j1, j2);
+			three_edges_constraint(buff, third_l, first_l, second_l, true,
+					true, false);
+		}
+
+		if (Globals.graph[i1][i2] == 1) {
+			third_l = get_l(k, i1, i2);
+			three_edges_constraint(buff, third_l, first_l, second_l, true,
+					true, false);
+		}
 	}
 
 	private static void triangle_constraints(StringBuffer buff, int first_l,
@@ -159,8 +164,7 @@ public class Main {
 
 	private static void readInput() throws FileNotFoundException, IOException {
 		// TODO take input filename from arguments
-		BufferedReader br = new BufferedReader(new FileReader(
-				"data/input1"));
+		BufferedReader br = new BufferedReader(new FileReader("data/input1"));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
