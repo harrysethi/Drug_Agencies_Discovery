@@ -8,7 +8,11 @@ public class Utils {
 
 	public static void createLiteralMap() {
 		// Creating the literals map
-		Globals.l_map = new HashMap<String, Integer>();
+		if (Globals.isPart1) {
+			Globals.l_map_part1 = new HashMap<String, Integer>();
+		} else {
+			Globals.l_map_part2 = new HashMap<Integer, String>();
+		}
 
 		// * remember, all vertices loops shall start from 1 & goes up to numOfV
 		for (int i = 1; i <= Globals.numOfV; i++) {
@@ -19,7 +23,16 @@ public class Utils {
 				}
 
 				for (int k = 0; k < Globals.in_K; k++) {
-					Globals.l_map.put(get_l_str(k, i, j), gt_l_index());
+					int tmp_index = gt_l_index();
+					String tmp_str = get_l_str(k, i, j);
+
+					if (Globals.isPart1) {
+						Globals.l_map_part1.put(tmp_str, tmp_index);
+					}
+
+					else {
+						Globals.l_map_part2.put(tmp_index, tmp_str);
+					}
 				}
 			}
 		}
@@ -28,7 +41,7 @@ public class Utils {
 	public static StringBuffer setP_Buff() {
 		StringBuffer p_buff = new StringBuffer("");
 		p_buff.append("p cnf ");
-		p_buff.append(Globals.l_map.size());
+		p_buff.append(Globals.l_map_part1.size());
 		p_buff.append(" ");
 		p_buff.append(Globals.numOfConstraints);
 		p_buff.append("\n");
@@ -45,7 +58,7 @@ public class Utils {
 		sb.append(i);
 		sb.append(",");
 		sb.append(j);
-		sb.append(":");
+		sb.append(",");
 		sb.append(k);
 		return sb.toString();
 	}
@@ -60,7 +73,7 @@ public class Utils {
 			temp = get_l_str(k, j, i);
 		}
 
-		return Globals.l_map.get(temp);
+		return Globals.l_map_part1.get(temp);
 	}
 
 	/*

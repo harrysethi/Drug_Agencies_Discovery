@@ -1,6 +1,8 @@
 package drug.testMain;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Set;
 
 import drug.globals.Globals;
 import drug.src.Constraints;
@@ -12,12 +14,69 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		IO.readInput();
+		int partNum = Integer.parseInt(args[1]);
+		String key = args[2];
+
+		String graphFile = key + ".graph";
+
+		String satInputFile = key + ".satinput";
+		String satOutputFile = key + ".satoutput";
+		String finalOutputFile = key + ".subgraphs";
+
+		if (partNum == 1) {
+			part1(graphFile, satInputFile);
+		}
+
+		else {
+			part2(graphFile, satOutputFile, finalOutputFile);
+		}
+	}
+
+	private static void part2(String graphFile, String satOutputFile,
+			String finalOutputFile) throws FileNotFoundException, IOException {
+		Globals.isPart1 = false;
+
+		IO.readInput_part1(graphFile);
+		Utils.createLiteralMap();
+
+		IO.readInput_part2(satOutputFile);
 
 		StringBuffer buff = new StringBuffer("");
 
+		if (Globals.isSat == false) {
+			// printing 0 if unsatisfied
+			buff.append("0");
+			return;
+		}
+
+		for (int i = 0; i < Globals.in_K; i++) {
+			StringBuffer inBuff = new StringBuffer("");
+
+			Set<Integer> mySet = Globals.listOfSet.get(i);
+			inBuff.append("#").append(i + 1).append(" ").append(mySet.size());
+			inBuff.append("\n");
+
+			for (int j : mySet) {
+				inBuff.append(j).append(" ");
+			}
+
+			buff.append(inBuff.toString().trim());
+			buff.append("\n");
+		}
+
+		IO.printFinalOutput(buff, finalOutputFile);
+	}
+
+	private static void part1(String graphFile, String satInputFile)
+			throws FileNotFoundException, IOException {
+		Globals.isPart1 = true;
+
+		IO.readInput_part1(graphFile);
 		Utils.createLiteralMap();
-		System.out.println(Globals.l_map.size());
+
+		StringBuffer buff = new StringBuffer("");
+
+		System.out.println(Globals.l_map_part1.size());
 
 		Constraints.constraints_TakingEachEdge_notTakingEdges(buff);
 
@@ -34,7 +93,7 @@ public class Main {
 					continue;
 				}
 
-				int new_l_cnt = 0;
+				// int new_l_cnt = 0;
 				StringBuffer X_buff = new StringBuffer("");
 
 				for (int i = 1; i <= Globals.numOfV; i++) {
@@ -49,10 +108,10 @@ public class Main {
 							continue;
 						}
 
-						String X_str = "X" + k1 + "," + k2 + ":" + ++new_l_cnt;
+						// X_str = "X" + k1 + "," + k2 + ":" + ++new_l_cnt;
 
 						int x_index = Utils.gt_l_index();
-						Globals.l_map.put(X_str, x_index);
+						// Globals.l_map_part1.put(X_str, x_index);
 						X_buff.append(x_index).append(" ");
 
 						int first_l = Utils.get_l(k1, i, j);
@@ -79,11 +138,7 @@ public class Main {
 		}
 
 		IO.printMap();
-		IO.printSATinput(buff);
+		IO.printSATinput(buff, satInputFile);
 	}
-	/*
-	 * private static String new_l_str(int k1, int k2, int new_l_cnt) { return;
-	 * }
-	 */
 
 }

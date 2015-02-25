@@ -37,7 +37,7 @@ public class Constraints {
 	public static void constraints_noSubgraphEmpty(StringBuffer buff) {
 		// 3. no subgraph should be empty
 		for (int k = 0; k < Globals.in_K; k++) {
-			for (int c = k + 1; c <= Globals.l_map.size(); c += Globals.in_K) {
+			for (int c = k + 1; c <= Globals.l_map_part1.size(); c += Globals.in_K) {
 				buff.append(c);
 				buff.append(" ");
 			}
