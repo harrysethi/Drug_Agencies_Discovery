@@ -33,6 +33,25 @@ public class ConstraintsHelper {
 		Utils.endLineInSAT(buff);
 	}
 
+	/*
+	 * public static void three_edges_constraint2(StringBuffer buff, String
+	 * third_l, String first_l, String second_l, boolean isF_neg, boolean
+	 * isS_neg, boolean isT_neg) {
+	 * 
+	 * if (first_l > second_l) { return; }
+	 * 
+	 * if (isF_neg) { buff.append("-"); } buff.append(first_l);
+	 * buff.append(" ");
+	 * 
+	 * if (isS_neg) { buff.append("-"); } buff.append(second_l);
+	 * buff.append(" ");
+	 * 
+	 * if (isT_neg) { buff.append("-"); } buff.append(third_l);
+	 * buff.append(" ");
+	 * 
+	 * Utils.endLineInSAT(buff); }
+	 */
+
 	public static void triangle_constraint(StringBuffer buff, int first_l,
 			int second_l, int third_l) {
 		three_edges_constraint(buff, third_l, first_l, second_l, true, true,

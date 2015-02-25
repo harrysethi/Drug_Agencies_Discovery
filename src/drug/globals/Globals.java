@@ -10,6 +10,7 @@ public class Globals {
 	public static int in_K;
 
 	public static Map<String, Integer> l_map;
-	
+
 	public static int numOfConstraints;
+	public static int literalIndex;
 }

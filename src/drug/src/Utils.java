@@ -11,7 +11,6 @@ public class Utils {
 		Globals.l_map = new HashMap<String, Integer>();
 
 		// * remember, all vertices loops shall start from 1 & goes up to numOfV
-		int literalIndex = 0;
 		for (int i = 1; i <= Globals.numOfV; i++) {
 			for (int j = i; j <= Globals.numOfV; j++) {
 
@@ -20,7 +19,7 @@ public class Utils {
 				}
 
 				for (int k = 0; k < Globals.in_K; k++) {
-					Globals.l_map.put(get_l_str(k, i, j), ++literalIndex);
+					Globals.l_map.put(get_l_str(k, i, j), gt_l_index());
 				}
 			}
 		}
@@ -54,6 +53,7 @@ public class Utils {
 	public static int get_l(int k, int i, int j) {
 		String temp;
 
+		// TODO: this should be fine
 		if (i < j) {
 			temp = get_l_str(k, i, j);
 		} else {
@@ -61,6 +61,20 @@ public class Utils {
 		}
 
 		return Globals.l_map.get(temp);
+	}
+
+	/*
+	 * public static String get_l_debug(int k, int i, int j) { // TODO: check
+	 * shall // be deleted String temp;
+	 * 
+	 * // TODO: this should be fine if (i < j) { temp = get_l_str(k, i, j); }
+	 * else { temp = get_l_str(k, j, i); }
+	 * 
+	 * return temp; }
+	 */
+
+	public static int gt_l_index() {
+		return ++Globals.literalIndex;
 	}
 
 }

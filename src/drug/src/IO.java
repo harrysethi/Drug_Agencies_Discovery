@@ -13,9 +13,10 @@ import java.util.Map.Entry;
 import drug.globals.Globals;
 
 public class IO {
+
 	public static void readInput() throws FileNotFoundException, IOException {
 		// TODO take input filename from arguments
-		BufferedReader br = new BufferedReader(new FileReader("data/input1"));
+		BufferedReader br = new BufferedReader(new FileReader("data/8vertices"));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
@@ -39,16 +40,15 @@ public class IO {
 
 	public static void printMap() {
 		for (Entry<String, Integer> entry : Globals.l_map.entrySet()) {
-			System.out.println(entry.getValue() + " : " + entry.getKey());
+			System.out.println(entry.getValue() + "  ->  " + entry.getKey());
 		}
 	}
 
-	public static void printSATinput(StringBuffer buff, StringBuffer p_buff)
-			throws IOException {
+	public static void printSATinput(StringBuffer buff) throws IOException {
 		// TODO take output filename from arguments
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(
 				"data/output")));
-
+		StringBuffer p_buff = Utils.setP_Buff();
 		pw.print(p_buff.toString());
 		pw.print(buff.toString());
 
