@@ -14,8 +14,8 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		int partNum = Integer.parseInt(args[1]);
-		String key = args[2];
+		int partNum = Integer.parseInt(args[0]);
+		String key = args[1];
 
 		String graphFile = key + ".graph";
 
