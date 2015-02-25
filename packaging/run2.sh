@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo ""
+if [ $# -lt 1 ]
+then
+	echo "Error: ---missing required parameters"
+	echo ""
+	exit 1
+fi
+
+#echo ""
+
+java -jar drugs.jar 2 $1
