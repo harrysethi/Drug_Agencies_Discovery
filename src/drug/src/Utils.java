@@ -38,23 +38,18 @@ public class Utils {
 		}
 	}
 
-	public static StringBuffer setP_Buff() {
-		StringBuffer p_buff = new StringBuffer("");
+	public static StringBuilder setP_Buff() {
+		StringBuilder p_buff = new StringBuilder("");
 		p_buff.append("p cnf ");
-		p_buff.append(Globals.l_map_part1.size());
+		p_buff.append(Globals.literalIndex);
 		p_buff.append(" ");
 		p_buff.append(Globals.numOfConstraints);
 		p_buff.append("\n");
 		return p_buff;
 	}
 
-	public static void endLineInSAT(StringBuffer buff) {
-		buff.append("0\n");
-		Globals.numOfConstraints++;
-	}
-
 	private static String get_l_str(int k, int i, int j) {
-		StringBuffer sb = new StringBuffer("");
+		StringBuilder sb = new StringBuilder("");
 		sb.append(i);
 		sb.append(",");
 		sb.append(j);
@@ -88,6 +83,11 @@ public class Utils {
 
 	public static int gt_l_index() {
 		return ++Globals.literalIndex;
+	}
+
+	public static void endLineInSAT(StringBuilder buff) {
+		buff.append("0\n");
+		Globals.numOfConstraints++;
 	}
 
 }

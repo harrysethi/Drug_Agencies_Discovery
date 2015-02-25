@@ -1,5 +1,6 @@
 package drug.globals;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ public class Globals {
 	public static Map<String, Integer> l_map_part1;
 
 	public static int numOfConstraints;
+	
 	public static int literalIndex;
 
 	// specifically for part2
@@ -23,4 +25,7 @@ public class Globals {
 	public static Map<Integer, String> l_map_part2;
 	
 	public static List<Set<Integer>> listOfSet;
+	
+	
+	public static PrintWriter pw;
 }

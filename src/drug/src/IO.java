@@ -97,21 +97,12 @@ public class IO {
 		}
 	}
 
-	public static void printSATinput(StringBuffer buff, String satInputFile)
+	public static void printSATinput(StringBuilder buff, String satInputFile)
 			throws IOException {
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(
 				satInputFile)));
-		StringBuffer p_buff = Utils.setP_Buff();
+		StringBuilder p_buff = Utils.setP_Buff();
 		pw.print(p_buff.toString());
-		pw.print(buff.toString());
-
-		pw.close();
-	}
-
-	public static void printFinalOutput(StringBuffer buff,
-			String finalOutputFile) throws IOException {
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(
-				finalOutputFile)));
 		pw.print(buff.toString());
 
 		pw.close();

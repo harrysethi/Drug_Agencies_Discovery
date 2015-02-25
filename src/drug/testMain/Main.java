@@ -1,16 +1,20 @@
 package drug.testMain;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Set;
 
 import drug.globals.Globals;
 import drug.src.Constraints;
-import drug.src.ConstraintsHelper;
 import drug.src.IO;
 import drug.src.Utils;
 
 public class Main {
+
+	// TODO: try on multiple examples :: ensure it's not breaking on any example
 
 	public static void main(String[] args) throws IOException {
 
@@ -34,23 +38,29 @@ public class Main {
 
 	private static void part2(String graphFile, String satOutputFile,
 			String finalOutputFile) throws FileNotFoundException, IOException {
+		System.out.println("----Start with part2---");
 		Globals.isPart1 = false;
 
 		IO.readInput_part1(graphFile);
 		Utils.createLiteralMap();
+		Globals.pw = new PrintWriter(new BufferedWriter(new FileWriter(
+				finalOutputFile)));
 
 		IO.readInput_part2(satOutputFile);
 
-		StringBuffer buff = new StringBuffer("");
+		StringBuilder buff = new StringBuilder("");
 
 		if (Globals.isSat == false) {
 			// printing 0 if unsatisfied
 			buff.append("0");
+			Globals.pw.print(buff);
+			Globals.pw.close();
+			System.out.println("----Done with part2---");
 			return;
 		}
 
 		for (int i = 0; i < Globals.in_K; i++) {
-			StringBuffer inBuff = new StringBuffer("");
+			StringBuilder inBuff = new StringBuilder("");
 
 			Set<Integer> mySet = Globals.listOfSet.get(i);
 			inBuff.append("#").append(i + 1).append(" ").append(mySet.size());
@@ -64,81 +74,54 @@ public class Main {
 			buff.append("\n");
 		}
 
-		IO.printFinalOutput(buff, finalOutputFile);
+		Globals.pw.print(buff);
+		Globals.pw.close();
+		System.out.println("----Done with part2---");
 	}
 
 	private static void part1(String graphFile, String satInputFile)
 			throws FileNotFoundException, IOException {
+		System.out.println("----start with part1---");
 		Globals.isPart1 = true;
 
 		IO.readInput_part1(graphFile);
 		Utils.createLiteralMap();
+		Globals.pw = new PrintWriter(new BufferedWriter(new FileWriter(
+				satInputFile)));
 
-		StringBuffer buff = new StringBuffer("");
+		StringBuilder p_buff = Utils.setP_Buff();
+		Globals.pw.print(p_buff); // TODO: check - #f clauses always 0,#f
+									// variables may be wrong
 
-		System.out.println(Globals.l_map_part1.size());
+		StringBuilder buff = new StringBuilder("");
 
 		Constraints.constraints_TakingEachEdge_notTakingEdges(buff);
 
+		Globals.pw.print(buff);
+		buff = new StringBuilder("");
+
 		Constraints.constraints_noSubgraphEmpty(buff);
+
+		Globals.pw.print(buff);
+		buff = new StringBuilder("");
 
 		Constraints.constraints_completeness_connected(buff);
 
-		// Constraints_subgraph
-		for (int k1 = 0; k1 < Globals.in_K; k1++) {
+		Globals.pw.print(buff);
+		buff = new StringBuilder("");
 
-			for (int k2 = 0; k2 < Globals.in_K; k2++) {
+		Constraints.constraints_subgraph(buff);
 
-				if (k1 == k2) {
-					continue;
-				}
+		Globals.pw.print(buff);
+		buff = new StringBuilder("");
 
-				// int new_l_cnt = 0;
-				StringBuffer X_buff = new StringBuffer("");
+		// IO.printMap();
+		Globals.pw.close();
 
-				for (int i = 1; i <= Globals.numOfV; i++) {
-					for (int j = i; j <= Globals.numOfV; j++) {
+		System.out.println("c: " + Globals.numOfConstraints);
+		System.out.println("l: " + Globals.literalIndex);
 
-						if (i == j) {
-							continue;
-						}
-
-						// TODO: shall be fine
-						if (Globals.graph[i][j] != 1) {
-							continue;
-						}
-
-						// X_str = "X" + k1 + "," + k2 + ":" + ++new_l_cnt;
-
-						int x_index = Utils.gt_l_index();
-						// Globals.l_map_part1.put(X_str, x_index);
-						X_buff.append(x_index).append(" ");
-
-						int first_l = Utils.get_l(k1, i, j);
-						int second_l = Utils.get_l(k2, i, j);
-
-						// 1/3 clause for new X literal
-						buff.append(first_l).append(" ");
-						buff.append("-").append(x_index).append(" ");
-						Utils.endLineInSAT(buff);
-
-						// 2/3 clause for new X literal
-						buff.append("-").append(second_l).append(" ");
-						buff.append("-").append(x_index).append(" ");
-						Utils.endLineInSAT(buff);
-
-						// 3/3 clause for new X literal
-						ConstraintsHelper.three_edges_constraint(buff, x_index,
-								first_l, second_l, true, false, false);
-					}
-				}
-				Utils.endLineInSAT(X_buff);
-				buff.append(X_buff);
-			}
-		}
-
-		IO.printMap();
-		IO.printSATinput(buff, satInputFile);
+		System.out.println("----Done with part1---");
+		// IO.printSATinput(buff, satInputFile);
 	}
-
 }
