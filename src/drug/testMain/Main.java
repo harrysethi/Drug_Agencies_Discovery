@@ -14,8 +14,6 @@ import drug.src.Utils;
 
 public class Main {
 
-	// TODO: try on multiple examples :: ensure it's not breaking on any example
-
 	public static void main(String[] args) throws IOException {
 
 		int partNum = Integer.parseInt(args[0]);
@@ -87,11 +85,7 @@ public class Main {
 		IO.readInput_part1(graphFile);
 		Utils.createLiteralMap();
 		Globals.pw = new PrintWriter(new BufferedWriter(new FileWriter(
-				satInputFile)));
-
-		StringBuilder p_buff = Utils.setP_Buff();
-		Globals.pw.print(p_buff); // TODO: check - #f clauses always 0,#f
-									// variables may be wrong
+				"temp.txt")));
 
 		StringBuilder buff = new StringBuilder("");
 
@@ -105,23 +99,19 @@ public class Main {
 		Globals.pw.print(buff);
 		buff = new StringBuilder("");
 
-		Constraints.constraints_completeness_connected(buff);
+		Constraints.addCompletenessConstraints(buff);
 
 		Globals.pw.print(buff);
 		buff = new StringBuilder("");
 
-		Constraints.constraints_subgraph(buff);
+		Constraints.constraintsSubgraph(buff);
 
 		Globals.pw.print(buff);
 		buff = new StringBuilder("");
 
-		// IO.printMap();
 		Globals.pw.close();
 
-		System.out.println("c: " + Globals.numOfConstraints);
-		System.out.println("l: " + Globals.literalIndex);
-
-		System.out.println("----Done with part1---");
-		// IO.printSATinput(buff, satInputFile);
+		IO.printSATinput(satInputFile);
+		System.out.println("----end with part1---");
 	}
 }

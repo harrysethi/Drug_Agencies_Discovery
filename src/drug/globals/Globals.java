@@ -17,15 +17,16 @@ public class Globals {
 	public static Map<String, Integer> l_map_part1;
 
 	public static int numOfConstraints;
-	
+
 	public static int literalIndex;
+	public static int count = 0;
+	public static long conCount = 0;
 
 	// specifically for part2
 	public static boolean isSat = true;
 	public static Map<Integer, String> l_map_part2;
-	
+
 	public static List<Set<Integer>> listOfSet;
-	
-	
+
 	public static PrintWriter pw;
 }

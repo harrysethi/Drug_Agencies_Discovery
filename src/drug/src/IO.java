@@ -63,9 +63,10 @@ public class IO {
 			Globals.listOfSet.add(newSet);
 		}
 
+		int n = Globals.numOfV * (Globals.numOfV - 1) / 2 * Globals.in_K;
 		while (num != 0) {
 
-			if (num > Globals.l_map_part2.size()) {
+			if (num > n) {
 				break;
 			}
 
@@ -97,14 +98,28 @@ public class IO {
 		}
 	}
 
-	public static void printSATinput(StringBuilder buff, String satInputFile)
-			throws IOException {
+	public static void printSATinput(String satInputFile) throws IOException {
+		// Files to read
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(
 				satInputFile)));
+
+		BufferedReader br = new BufferedReader(new FileReader("temp.txt"));
+
+		String line;
+		int numOfClauses = 0;
+		while ((line = br.readLine()) != null) {
+			numOfClauses++;
+		}
+		br.close();
+
+		br = new BufferedReader(new FileReader("temp.txt"));
+		Globals.numOfConstraints = numOfClauses;
 		StringBuilder p_buff = Utils.setP_Buff();
 		pw.print(p_buff.toString());
-		pw.print(buff.toString());
-
+		while ((line = br.readLine()) != null) {
+			pw.println(line);
+		}
 		pw.close();
+		br.close();
 	}
 }

@@ -33,7 +33,23 @@ public class Utils {
 					else {
 						Globals.l_map_part2.put(tmp_index, tmp_str);
 					}
+					Globals.count++;
 				}
+			}
+		}
+		for (int i = 1; i <= Globals.numOfV; i++) {
+			for (int k = 0; k < Globals.in_K; k++) {
+				int tmp_index = gt_l_index();
+				String tmp_str = get_v_str(k, i);
+
+				if (Globals.isPart1) {
+					Globals.l_map_part1.put(tmp_str, tmp_index);
+				}
+
+				else {
+					Globals.l_map_part2.put(tmp_index, tmp_str);
+				}
+				Globals.count++;
 			}
 		}
 	}
@@ -58,10 +74,23 @@ public class Utils {
 		return sb.toString();
 	}
 
+	private static String get_v_str(int k, int i) {
+		StringBuilder sb = new StringBuilder("v");
+		sb.append(i);
+		sb.append(",");
+		sb.append(k);
+		return sb.toString();
+	}
+
+	public static int get_v(int k, int i) {
+		String temp;
+		temp = get_v_str(k, i);
+		return Globals.l_map_part1.get(temp);
+	}
+
 	public static int get_l(int k, int i, int j) {
 		String temp;
 
-		// TODO: this should be fine
 		if (i < j) {
 			temp = get_l_str(k, i, j);
 		} else {
@@ -70,16 +99,6 @@ public class Utils {
 
 		return Globals.l_map_part1.get(temp);
 	}
-
-	/*
-	 * public static String get_l_debug(int k, int i, int j) { // TODO: check
-	 * shall // be deleted String temp;
-	 * 
-	 * // TODO: this should be fine if (i < j) { temp = get_l_str(k, i, j); }
-	 * else { temp = get_l_str(k, j, i); }
-	 * 
-	 * return temp; }
-	 */
 
 	public static int gt_l_index() {
 		return ++Globals.literalIndex;
