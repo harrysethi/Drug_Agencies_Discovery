@@ -11,3 +11,5 @@ fi
 #echo ""
 
 java -jar drugs.jar 1 $1
+
+rm temp.txt
